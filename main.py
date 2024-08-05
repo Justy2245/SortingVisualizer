@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk
 
 globalData = [25, 50, 75, 100, 50, 75, 100, 10, 21, 1, 2, 3, 0]
 def bubble_sort(canvas, arr):
@@ -21,7 +22,7 @@ def bubble_sort(canvas, arr):
 
     # Start the sorting process
     sort_step(0, 0)
-def draw_bar_chart(canvas, data, width=600, height=400):
+def draw_bar_chart(canvas, data, width=700, height=500):
     # Clear the canvas
     canvas.delete("all")
 
@@ -53,12 +54,14 @@ def update(event, canvas, entry):
 def main():
     root = tk.Tk()
     root.title("Bar Chart")
-
-    entry = tk.Entry(root)
-    entry.grid(row=0,column=0)
+    label = tk.Label(root,text="Enter Value(Numbers separated by commas): ")
+    label.grid(row=0, column=0, sticky="W", padx=10)
+    entry = tk.Entry(root, width=70)
+    entry.grid(row=0, column=0, sticky="E", padx=10)
+    #sortChosen = ttk.Combobox(root, width=27, textvariable=n).grid(row=0,column=0)
     # Create a Canvas widget
-    canvas = tk.Canvas(root, width=600, height=400, bg="white")
-    canvas.grid(row=1,column=0)
+    canvas = tk.Canvas(root, width=700, height=500, bg="white")
+    canvas.grid(row=1, column=0)
 
     button = tk.Button(root, text="Sort", command=lambda: bubble_sort(canvas, globalData))
     button.grid(row=2,column=0)
