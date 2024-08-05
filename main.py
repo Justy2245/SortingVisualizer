@@ -61,16 +61,24 @@ def main():
     root = tk.Tk()
     root.title("Sorting Visualizer")
 
-    # Label widget and Entry box for input
+    # Label widget input
     label = tk.Label(root,text="Enter Value (Numbers separated by commas): ")
     label.grid(row=1, column=0, sticky="W", padx=10)
-    entry = tk.Entry(root, width=70)
+
+    # Setting default value
+    global global_data
+    default = (','.join(str(s) for s in global_data))
+    text = tk.StringVar()
+    text.set(default)
+    # Entry widget
+    entry = tk.Entry(root, width=70, textvariable=text)
     entry.grid(row=1, column=0, sticky="E", padx=10)
 
     # Dropdown menu to select type of sort
     sort_option = ('Bubble Sort', 'Other')
     sort_chosen = ttk.Combobox(root, width=27, values=sort_option)
     sort_chosen.grid(row=0, column=0)
+    # Set default to Bubble Sort
     sort_chosen.current(0)
 
     # Canvas Widget
@@ -82,6 +90,8 @@ def main():
     button.grid(row=3,column=0)
 
     root.bind("<KeyPress>", lambda event: update(event, canvas, entry))
+
+    draw_bar_chart(canvas, global_data)
 
     root.mainloop()
 
