@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 
-globalData = [25, 50, 75, 100, 50, 75, 100, 10, 21, 1, 2, 3, 0]
+global_data = [25, 50, 75, 100, 50, 75, 100, 10, 21, 1, 2, 3, 0]
 def bubble_sort(canvas, arr):
     def sort_step(i, j):
         if i < len(arr):
@@ -41,30 +41,45 @@ def draw_bar_chart(canvas, data, width=700, height=500):
         canvas.create_rectangle(x1, y1, x2, y2, fill="green", outline="black")
         canvas.create_text((x1 + x2) / 2, y1 + 10, text=str(value), anchor="n")
 
+# Update the bar chart to display current input
 def update(event, canvas, entry):
     string = entry.get()
 
     if(string.endswith(',') == False):
         # Split the string by commas
         string_list = string.split(',')
-        global globalData
-        globalData = list(map(int, string_list))
-        draw_bar_chart(canvas, globalData)
+        global global_data
+        global_data = list(map(int, string_list))
+        draw_bar_chart(canvas, global_data)
+
+def select_sort(canvas, option):
+    global global_data
+    if(option == "Bubble Sort"):
+        bubble_sort(canvas, global_data)
 
 def main():
     root = tk.Tk()
-    root.title("Bar Chart")
-    label = tk.Label(root,text="Enter Value(Numbers separated by commas): ")
-    label.grid(row=0, column=0, sticky="W", padx=10)
-    entry = tk.Entry(root, width=70)
-    entry.grid(row=0, column=0, sticky="E", padx=10)
-    #sortChosen = ttk.Combobox(root, width=27, textvariable=n).grid(row=0,column=0)
-    # Create a Canvas widget
-    canvas = tk.Canvas(root, width=700, height=500, bg="white")
-    canvas.grid(row=1, column=0)
+    root.title("Sorting Visualizer")
 
-    button = tk.Button(root, text="Sort", command=lambda: bubble_sort(canvas, globalData))
-    button.grid(row=2,column=0)
+    # Label widget and Entry box for input
+    label = tk.Label(root,text="Enter Value (Numbers separated by commas): ")
+    label.grid(row=1, column=0, sticky="W", padx=10)
+    entry = tk.Entry(root, width=70)
+    entry.grid(row=1, column=0, sticky="E", padx=10)
+
+    # Dropdown menu to select type of sort
+    sort_option = ('Bubble Sort', 'Other')
+    sort_chosen = ttk.Combobox(root, width=27, values=sort_option)
+    sort_chosen.grid(row=0, column=0)
+    sort_chosen.current(0)
+
+    # Canvas Widget
+    canvas = tk.Canvas(root, width=700, height=500, bg="white")
+    canvas.grid(row=2, column=0)
+
+    # Button to start sort
+    button = tk.Button(root, text="Sort", command=lambda: select_sort(canvas, sort_chosen.get()))
+    button.grid(row=3,column=0)
 
     root.bind("<KeyPress>", lambda event: update(event, canvas, entry))
 
