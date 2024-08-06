@@ -1,33 +1,14 @@
 import tkinter as tk
 from tkinter import ttk
+from bubble_sort import bubble_sort
 
-global_data = [25, 50, 75, 100, 50, 75, 100, 10, 21, 1, 2, 3, 0]
-def bubble_sort(canvas, arr):
-    def sort_step(i, j):
-        if i < len(arr):
-            if j < len(arr) - i - 1:
-                # Swap elements if needed
-                if arr[j] > arr[j + 1]:
-                    arr[j], arr[j + 1] = arr[j + 1], arr[j]
-                # Update the canvas
-                draw_bar_chart(canvas, arr)
-                # Schedule the next comparison
-                canvas.after(100, sort_step, i, j + 1)
-            else:
-                # Move to the next pass
-                canvas.after(100, sort_step, i + 1, 0)
-        else:
-            # Sorting is complete
-            draw_bar_chart(canvas, arr)
-
-    # Start the sorting process
-    sort_step(0, 0)
+global_data = [26, 43, 72, 100, 50, 75, 99, 10, 21, 1, 2, 3, 32]
 def draw_bar_chart(canvas, data, width=700, height=500):
     # Clear the canvas
     canvas.delete("all")
 
     # Dimensions
-    margin = 20
+    margin = 25
     bar_width = (width - 2 * margin) / len(data) - 10
     max_value = max(data)
 
@@ -55,7 +36,7 @@ def update(event, canvas, entry):
 def select_sort(canvas, option):
     global global_data
     if(option == "Bubble Sort"):
-        bubble_sort(canvas, global_data)
+        bubble_sort(canvas, global_data, draw_bar_chart)
 
 def main():
     root = tk.Tk()
