@@ -1,4 +1,4 @@
-def bubble_sort(canvas, arr, draw_bar_chart, delay = 100):
+def bubble_sort(canvas, arr, draw_bar_chart, delay=100):
     def sort_step(i, j):
         if i < len(arr):
             if j < len(arr) - i - 1:

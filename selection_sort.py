@@ -1,6 +1,6 @@
-def selection_sort(canvas, arr, draw_bar_chart, delay = 100):
+def selection_sort(canvas, arr, draw_bar_chart, delay=100):
     def sort_step(i):
-        if(i < len(arr)):
+        if i < len(arr):
             min_index = i
             for j in range(i + 1, len(arr)):
                 if arr[j] < arr[min_index]:
