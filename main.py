@@ -8,6 +8,7 @@ from quick_sort import quick_sort
 global_data = [26, 43, 72, 100, 50, 75, 99, 10, 21, 1, 2, 3, 32]
 
 
+# Update the bar chart with current array
 def draw_bar_chart(canvas, data, width=700, height=500):
     # Clear the canvas
     canvas.delete("all")
@@ -29,17 +30,22 @@ def draw_bar_chart(canvas, data, width=700, height=500):
 
 
 # Update the bar chart to display current input
-def update(event, canvas, entry):
+def update(event, canvas, entry, error_label):
     string = entry.get()
     if not string.endswith(","):
         # Split the string by commas
         string_list = string.split(",")
-        global global_data
-        global_data = list(map(int, string_list))
-        draw_bar_chart(canvas, global_data)
+        try:
+            global global_data
+            global_data = list(map(int, string_list))
+            draw_bar_chart(canvas, global_data)
+            error_label.config(text="")
+        except ValueError:
+            error_label.config(text="Error: Please enter valid integers separated by commas")
 
 
-def select_sort(canvas, option, delay):
+# Start the sort depending on choice
+def start_sort(canvas, option, delay):
     global global_data
     if option == "Bubble Sort":
         bubble_sort(canvas, global_data, draw_bar_chart, delay)
@@ -73,7 +79,7 @@ def main():
     # Label widget input
     label_entry = tk.Label(root, text="Enter Value (Numbers separated by commas): ")
     label_entry.grid(row=1, column=0, sticky="W", padx=10)
-    # Setting default value
+    # Setting default value for Entry widget
     global global_data
     default = (",".join(str(s) for s in global_data))
     text = tk.StringVar()
@@ -87,12 +93,17 @@ def main():
     canvas.grid(row=2, column=0)
 
     # Button to start sort
-    button = tk.Button(root, text="Sort", command=lambda: select_sort(canvas, sort_chosen.get(), delay.get()))
+    button = tk.Button(root, text="Sort", command=lambda: start_sort(canvas, sort_chosen.get(), delay.get()))
     button.grid(row=3, column=0)
 
-    # Update bar chart with current input on key press
-    root.bind("<KeyPress>", lambda event: update(event, canvas, entry))
+    # Error label for invalid input
+    error_label = tk.Label(root, text="", fg="red")
+    error_label.grid(row=2, column=0, sticky="N")
 
+    # Update bar chart with current input on key press
+    root.bind("<KeyPress>", lambda event: update(event, canvas, entry, error_label))
+
+    # Initialize bar chart
     draw_bar_chart(canvas, global_data)
 
     root.mainloop()
