@@ -4,6 +4,7 @@ from bubble_sort import bubble_sort
 from selection_sort import selection_sort
 from insertion_sort import insertion_sort
 from quick_sort import quick_sort
+from merge_sort import merge_sort
 
 global_data = [26, 43, 72, 100, 50, 75, 99, 10, 21, 1, 2, 3, 32]
 
@@ -55,6 +56,8 @@ def start_sort(canvas, option, delay):
         insertion_sort(canvas, global_data, draw_bar_chart, delay)
     elif option == "Quick Sort":
         quick_sort(canvas, global_data, draw_bar_chart, delay)
+    elif option == "Merge Sort":
+        merge_sort(canvas, global_data, draw_bar_chart, delay)
 
 
 def main():
@@ -62,7 +65,7 @@ def main():
     root.title("Sorting Visualizer")
 
     # Dropdown menu to select type of sort
-    sort_option = ("Bubble Sort", "Selection Sort", "Insertion Sort", "Quick Sort")
+    sort_option = ("Bubble Sort", "Selection Sort", "Insertion Sort", "Quick Sort", "Merge Sort")
     sort_chosen = ttk.Combobox(root, width=27, values=sort_option)
     sort_chosen.grid(row=0, column=0, sticky="W", padx=10)
     # Set default to Bubble Sort
